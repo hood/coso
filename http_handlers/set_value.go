@@ -24,13 +24,11 @@ func SetValue(gcsClient *gcs_client.GCSClient, eventEmitter *emitter.Emitter) ht
 			return
 		}
 
-		gcsClient.SetValue(parsedRequestBody.Key, parsedRequestBody.Value)
-
-		// updatedValue, error := gcsClient.GetValue(parsedRequestBody.Key)
-		// if error != nil {
-		// 	http.Error(responseWriter, error.Error(), http.StatusBadRequest)
-		// 	return
-		// }
+		setValueError := gcsClient.SetValue(parsedRequestBody.Key, parsedRequestBody.Value)
+		if setValueError != nil {
+			http.Error(responseWriter, setValueError.Error(), http.StatusBadRequest)
+			return
+		}
 
 		eventEmitter.Emit(parsedRequestBody.Key, parsedRequestBody.Value)
 

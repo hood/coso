@@ -44,31 +44,13 @@ func (gcsClient *GCSClient) SetValue(key string, value string) error {
 
 	// Write the value.
 	if _, writeError := fmt.Fprintf(objectWriter, value); writeError != nil {
-		fmt.Println(writeError.Error())
 		return writeError
 	}
 
 	// Close, just like writing a file.
 	if objectWriterCloseError := objectWriter.Close(); objectWriterCloseError != nil {
-		fmt.Println(objectWriterCloseError.Error())
 		return objectWriterCloseError
 	}
-
-	// Read it back.
-	objectReader, objectReaderError := object.NewReader(operationContext)
-	if objectReaderError != nil {
-		fmt.Println(objectReaderError.Error())
-		return objectReaderError
-	}
-
-	// Close the reader.
-	defer objectReader.Close()
-
-	// Debug only: print the set value.
-	// if _, ioCopyError := io.Copy(os.Stdout, objectReader); ioCopyError != nil {
-	// 	fmt.Println(objectReaderError.Error())
-	// 	return objectReaderError
-	// }
 
 	return nil
 }
@@ -80,13 +62,11 @@ func (gcsClient *GCSClient) GetValue(key string) ([]byte, error) {
 	// Read it back.
 	objectReader, objectReaderError := object.NewReader(operationContext)
 	if objectReaderError != nil {
-		fmt.Println(objectReaderError.Error())
 		return nil, objectReaderError
 	}
 
 	content, ioError := ioutil.ReadAll(objectReader)
 	if ioError != nil {
-		fmt.Println(ioError.Error())
 		return nil, ioError
 	}
 

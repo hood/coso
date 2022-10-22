@@ -24,10 +24,10 @@ func GetValue(gcsClient *gcs_client.GCSClient, eventEmitter *emitter.Emitter) ht
 			return
 		}
 
-		value, error := gcsClient.GetValue(parsedRequestBody.Key)
-		if error != nil {
-			println("Error getting value:", error.Error())
-			http.Error(responseWriter, error.Error(), http.StatusBadRequest)
+		value, getValueError := gcsClient.GetValue(parsedRequestBody.Key)
+		if getValueError != nil {
+			println("Error getting value:", getValueError.Error())
+			http.Error(responseWriter, getValueError.Error(), http.StatusBadRequest)
 			return
 		}
 
