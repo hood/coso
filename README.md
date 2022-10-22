@@ -16,7 +16,7 @@
 <h3 align="center">coso</h3>
 
   <p align="center">
-    An open-source HTTP back-end using Google Cloud Storage as a key-value store.
+    An open-source HTTP back-end with realtime subscriptions using Google Cloud Storage as a key-value store.
     <br />
     <a href="https://github.com/hood/coso/README.md"><strong>Explore the docs »</strong></a>
     <br />
